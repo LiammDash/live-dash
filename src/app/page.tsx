@@ -1,10 +1,10 @@
 import React from 'react'
-import Home from './home/home'
+import Dash from './Dash/page'
 
 const page = () => {
   return (
     <>
-      <Home />
+      <Dash />
     </>
   )
 }

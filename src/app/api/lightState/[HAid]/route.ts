@@ -21,7 +21,7 @@ const response = await fetch(url, options);
     const color = rgb
         ? rgb.map((x: number) => x.toString(16).padStart(2, "0")).join("")
         : null;
-    const brightness = data.attributes.brightness*3;
+    const brightness = data.attributes.brightness*4;
 
     return new Response(JSON.stringify({ 
         state: state,
