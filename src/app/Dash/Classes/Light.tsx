@@ -12,6 +12,7 @@ export class Light {
     helpers: any;
     modelName: string;
     model: any;
+    material: any;
 
 
     constructor(helpers: any, x: number, y: number, z: number, HAid: string = "", groupId: string = "", modelName: string = "") {
@@ -24,6 +25,7 @@ export class Light {
       this.color = 0xffffff
       this.intensity = 1;
       this.model;
+      this.material;
       if(this.modelName == "") {
         this.light = new THREE.PointLight(this.color, this.intensity);
         const geometry = new THREE.SphereGeometry(2, 2, 2);
@@ -32,13 +34,70 @@ export class Light {
         this.sphere.position.set(x, y, z);
         helpers.scene.add(this.sphere);
       }else {
-        console.log(helpers.scene.children)
-        helpers.scene.children.forEach((child: any) => {
-          // You can add your logic here for each child
-          console.log(child)
-        });
+        //Gotta wait for this to load in, probably add some sort of event listener here
+        setTimeout(() => {
+            const jaydenHouse = this.helpers.scene.children.find((child: any) => child.name === "JaydenHouse");
+            const mesh = jaydenHouse.children.find((child: any) => child.name === modelName);
+            this.model = mesh
+
+            // Add event listener for clicks
+            helpers.renderer.domElement.addEventListener('click', (event: MouseEvent | Touch) => {
+              helpers.pickHelper.setPickPosition(event, helpers.getCanvasRelativePosition(event));
+              helpers.pickHelper.pick(helpers.scene, helpers.camera, performance.now());
+              if (helpers.pickHelper.pickedObject === this.model) {
+              const idToToggle = helpers.toggleGroups && this.groupId ? this.groupId : this.HAid;
+              fetch(`/api/toggleLight/${idToToggle}`, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ active: this.active }),
+              })
+              .then((response: { ok: any; }) => {
+                if (response.ok) {
+                this.pollLightState();
+                } else {
+                console.error('Error toggling light');
+                }
+              });
+              }
+            });
+
+            // Add hover effect for the model
+            helpers.renderer.domElement.addEventListener('mousemove', (event: MouseEvent | Touch) => {
+              helpers.pickHelper.setPickPosition(event, helpers.getCanvasRelativePosition(event));
+              helpers.pickHelper.pick(helpers.scene, helpers.camera, performance.now());
+              if (helpers.pickHelper.pickedObject === this.model) {
+              if (!this.isHovered) {
+                this.isHovered = true;
+                if (this.model.material && this.model.material.color) {
+                this.model.material.color.set(0xBBFFBB); // highlight color
+                }
+                helpers.renderer.domElement.style.cursor = 'pointer';
+              }
+              } else {
+              if (this.isHovered) {
+                this.isHovered = false;
+                helpers.renderer.domElement.style.cursor = 'default';
+              }
+              }
+            });
+            
+            if (this.model) {
+
+              let emissiveMaterial = new THREE.MeshStandardMaterial({
+                color: "#ff5500",
+                emissive: "#ff5500",
+                emissiveIntensity: this.intensity,
+              });
+              this.material = emissiveMaterial;
+            }
+
+        }, 500);
       }
       
+
+
 
 
       // Add event listener for clicks
@@ -85,12 +144,20 @@ export class Light {
       //Initiate default values for three light
       if(this.modelName == "") {
         this.light.position.set(x, y, z);
-        this.light.castShadow = true;
         helpers.scene.add(this.light);
-      }
+        this.light.castShadow = true;
+        // Configure shadow properties for better results
+        this.light.shadow.bias = -0.005;
+        this.light.shadow.mapSize.width = 1024;
+        this.light.shadow.mapSize.height = 1024;
+        // Ensure renderer has shadowMap enabled
+        if (this.helpers.renderer) {
+          this.helpers.renderer.shadowMap.enabled = true;
+          this.helpers.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        }
+      } 
 
 
-      this.pollLightState(); // Initial call
 
       }
 
@@ -108,11 +175,22 @@ export class Light {
           if(this.modelName == "") {
             this.light.color.setHex(parseInt(data.color, 16));
             this.light.intensity = data.brightness;
-            
+
+          } else {
+            this.material.color.setHex(parseInt(data.color, 16))
+            this.material.emissive.setHex(parseInt(data.color, 16))
+            this.material.intensity = data.brightness*100000;
+            this.model.material = this.material;
           }
           this.setActive(true);
         } else {
           this.setActive(false);
+          if(this.material) {
+            this.material.color.setHex(parseInt("222222", 16))
+            this.material.emissive.setHex(parseInt("222222", 16))
+            this.material.intensity = data.brightness*1;
+            this.model.material = this.material;
+          }          
         }
         })
         .catch((error) => {

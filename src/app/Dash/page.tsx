@@ -28,6 +28,38 @@ const Dash = () => {
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
+
+    //Load GLTF Model
+    const GLTFloader = new GLTFLoader();
+
+    GLTFloader.load('/JaydenHouse.glb', function (gltf: { scene: THREE.Object3D }) {
+      houseModel = gltf.scene; // Assign the loaded scene to the variable
+
+      // Set a name for the group so it can be identified in the scene
+      houseModel.name = "JaydenHouse";
+
+      // Enable shadow receiving for all meshes in the model
+      houseModel.traverse((child: any) => {
+      if (child.isMesh) {
+        //child.castShadow = true;
+        //child.receiveShadow = true;
+      }
+      });
+
+      scene.add(houseModel);
+
+      // Console log all models (children) in the loaded scene
+      /*houseModel.traverse((child) => {
+      console.log('Model:', child);
+      });*/
+    }, undefined, function (error: any) {
+      console.error(error);
+    });
+
+    // Enable shadows in the renderer
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
     //Helper for PickHelper...
     function getCanvasRelativePosition(event: MouseEvent | Touch) {
           const rect = renderer.domElement.getBoundingClientRect();
@@ -90,24 +122,7 @@ const Dash = () => {
       scene.background = texture;
     });
 
-    //Load GLTF Model
-    const GLTFloader = new GLTFLoader();
 
-    GLTFloader.load('/JaydenHouse.glb', function (gltf: { scene: THREE.Object3D }) {
-      houseModel = gltf.scene; // Assign the loaded scene to the variable
-
-      // Set a name for the group so it can be identified in the scene
-      houseModel.name = "JaydenHouse";
-
-      scene.add(houseModel);
-
-      // Console log all models (children) in the loaded scene
-      /*houseModel.traverse((child) => {
-        console.log('Model:', child);
-      });*/
-    }, undefined, function (error: any) {
-      console.error(error);
-    });
 
     //Set Initial Cam Pos
     camera.position.set(0, 43, 90); camera.rotation.x = -0.4;
@@ -135,10 +150,12 @@ const Dash = () => {
     let bedroomLamp2 = new Light(helpers, -15, 10, -20, "light.bedroom_r", "");
     lights.push(bedroomLamp1, bedroomLamp2)
 
-    let kitchenLamp1 = new Light(helpers, 58, 12, -14, "light.wooden_light", "light.lounge");
+
+    console.log(scene.children)
+    let kitchenLamp1 = new Light(helpers, 58, 12, -14, "light.wooden_light", "light.lounge", "Wooden_Lamp");
     lights.push(kitchenLamp1)
 
-    let serverLED = new Light(helpers, 20, 9, -10, "light.rack_light_1", "", "Server_Box");
+    let serverLED = new Light(helpers, 20, 9, -10, "light.rack_light_1", "", "Server_LED_Strip");
     lights.push(serverLED)
 
     //Set Light Polling

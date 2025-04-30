@@ -16,7 +16,7 @@ const dock = () => {
             <App name="Prowlarr" img="prowlarr.png" url="http://192.168.2.150:30050"></App>
             <App name="Tautulli" img="tautulli.png" url="http://192.168.2.150:30047"></App>
             <App name="Dockge" img="dockge.svg" url="http://192.168.2.150:31014"></App>
-            <App name="ESP Home" img="esphome.svg" url="http://192.168.2.150:36052"></App>
+            <App name="ESP Home" img="esphome.svg" url="http://192.168.2.157:8123/5c53de3b_esphome/ingress"></App>
             <App name="Flood" img="flood.png" url="http://192.168.2.150:30127"></App>
             <App name="Scrypted" img="scrypted.png" url="http://192.168.2.150:30130"></App>
         </div>
