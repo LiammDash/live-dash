@@ -1,5 +1,12 @@
 'use client'
 
+
+//Note Taking
+/*
+Notification bell up in the task bar, this will slide out notifications on the right
+*/
+
+
 // Imports
 import React from 'react'
 import * as THREE from 'three';
@@ -155,8 +162,6 @@ const Dash = () => {
     let bedroomLamp2 = new Light(helpers, -15, 10, -20, "light.bedroom_r", "");
     lights.push(bedroomLamp1, bedroomLamp2)
 
-
-    console.log(scene.children)
     let kitchenLamp1 = new Light(helpers, 58, 12, -14, "light.wooden_light", "light.lounge");
     lights.push(kitchenLamp1)
 
@@ -164,7 +169,7 @@ const Dash = () => {
     //Create LED Strips
     let leds: LED[] = [];
 
-    let serverLED = new LED(helpers, 20, 9, -10, "light.rack_light_1", "", "Server_LED_Strip");
+    let serverLED = new LED(helpers, "light.rack_light_1", "", "Server_LED_Strip");
     leds.push(serverLED)
 
     //Set Light Polling

@@ -17,7 +17,7 @@ export class LED {
     inactiveColor: any;
 
 
-    constructor(helpers: any, x: number, y: number, z: number, HAid: string = "", groupId: string = "", modelName: string = "") {
+    constructor(helpers: any, HAid: string = "", groupId: string = "", modelName: string = "") {
         //Init Vars
         this.modelName = modelName;
         this.helpers = helpers;
@@ -33,28 +33,6 @@ export class LED {
         this.activeColor = 0xffffff;
         this.inactiveColor = 0x555555;
 
-        // Add event listener for clicks
-        helpers.renderer.domElement.addEventListener('click', (event: MouseEvent | Touch) => {
-            helpers.pickHelper.setPickPosition(event, helpers.getCanvasRelativePosition(event));
-            helpers.pickHelper.pick(helpers.scene, helpers.camera, performance.now());
-            if (helpers.pickHelper.pickedObject === this.model) {
-                const idToToggle = helpers.toggleGroups && this.groupId ? this.groupId : this.HAid;
-                fetch(`/api/toggleLight/${idToToggle}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ active: this.active }),
-                })
-                .then((response: { ok: any; }) => {
-                    if (response.ok) {
-                        this.pollLightState();
-                    } else {
-                        console.error('Error toggling light');
-                    }
-                })
-            }
-        });
     }
 
     initiateLed() {
