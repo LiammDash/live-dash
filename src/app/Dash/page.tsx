@@ -10,8 +10,9 @@ import styles from './style.module.css';
 
 import { PickHelper } from './Classes/PickHelper';
 import { Light } from './Classes/Light'
-import GroupToggle from '@/app/groupToggle/groupToggle';
+import { LED } from './Classes/LED'
 import Dock from '@/app/Dash/Dock/dock'
+import ToolBar from '@/app/Dash/ToolBar/toolbar'
 
 const Dash = () => {
   //Vars
@@ -47,6 +48,10 @@ const Dash = () => {
       });
 
       scene.add(houseModel);
+
+      leds.forEach(led => {
+        led.initiateLed();
+      });
 
       // Console log all models (children) in the loaded scene
       /*houseModel.traverse((child) => {
@@ -152,16 +157,27 @@ const Dash = () => {
 
 
     console.log(scene.children)
-    let kitchenLamp1 = new Light(helpers, 58, 12, -14, "light.wooden_light", "light.lounge", "Wooden_Lamp");
+    let kitchenLamp1 = new Light(helpers, 58, 12, -14, "light.wooden_light", "light.lounge");
     lights.push(kitchenLamp1)
 
-    let serverLED = new Light(helpers, 20, 9, -10, "light.rack_light_1", "", "Server_LED_Strip");
-    lights.push(serverLED)
+
+    //Create LED Strips
+    let leds: LED[] = [];
+
+    let serverLED = new LED(helpers, 20, 9, -10, "light.rack_light_1", "", "Server_LED_Strip");
+    leds.push(serverLED)
 
     //Set Light Polling
     setInterval(() => {
       lights.forEach(light => {
         light.pollLightState();
+      });
+    }, 1000);
+
+    //Set Light Polling
+    setInterval(() => {
+      leds.forEach(led => {
+        led.pollLightState();
       });
     }, 1000);
 
@@ -180,12 +196,11 @@ const Dash = () => {
     }
   renderer.setAnimationLoop( animate );
 
-
   }, []);
   return (
     <>
+      <ToolBar />
       <Dock />
-      <GroupToggle />
     </>
   )
 }

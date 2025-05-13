@@ -1,0 +1,8 @@
+.wrapper {
+    position: absolute;
+    top: 2.5vh;
+    width: 8vw;
+    min-height: 5vh;
+    background: rgba(12, 12, 12, 0.727);
+    border: black 1px solid;
+}

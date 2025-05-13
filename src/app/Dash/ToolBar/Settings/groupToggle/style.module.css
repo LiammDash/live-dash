@@ -1,0 +1,30 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.groupToggleContainer {
+    width: 60px;
+    height: 25px;
+    border: solid rgb(6, 6, 6) 2px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.groupToggleCircle {
+    height: 18px;
+    width: 18px;
+    background: rgb(79, 79, 79);
+    border-radius: 5000px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease-in-out;
+}
+
+.active .groupToggleCircle{
+    transform: translateX(36px) translateY(-50%);
+    background: rgb(76, 106, 66);
+}
