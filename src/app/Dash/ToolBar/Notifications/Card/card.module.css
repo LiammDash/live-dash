@@ -1,0 +1,7 @@
+.card {
+    width: 90%;
+    padding: 2vh;
+    border-radius: 15px;
+    border: solid gray 2px;
+    margin-bottom: 3vh;
+}

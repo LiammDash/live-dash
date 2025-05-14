@@ -8,3 +8,6 @@
   font-style: normal;
 }
 
+body {
+  overflow: hidden;
+}

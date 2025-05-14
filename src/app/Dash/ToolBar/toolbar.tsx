@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './toolbar.module.css'
 import Settings from './Settings/settings'
+import Notifications from './Notifications/notifications'
 
 const toolbar = () => {
     const [currentTime, setCurrentTime] = React.useState('');
@@ -32,6 +33,7 @@ const toolbar = () => {
             </div>
             <div className={styles.spacer}></div>
             <span id={styles.time}>{currentTime}</span>
+            <Notifications />
         </div>
     );
 };
