@@ -25,5 +25,5 @@
 
 #time {
     margin-left: auto;
-    transform: translateX(46vw);
+    align-self: flex-end;
 }

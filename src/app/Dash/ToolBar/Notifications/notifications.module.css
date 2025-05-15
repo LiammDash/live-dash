@@ -15,7 +15,7 @@
     position: absolute;
     right: 0;
     top: 2.5vh;
-    width: 25vw;
+    width: 20vw;
     height: 97.5vh;
     z-index: 9000;
     display: flex;
@@ -25,6 +25,15 @@
     padding-top: 2vh;
     transform: translateX(30vw);
     transition: all .45s ease-in-out;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    background: linear-gradient(to left, #323232b0, #00000000);
+    pointer-events: none;
+}
+
+#notificationPanel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 

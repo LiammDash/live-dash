@@ -177,14 +177,14 @@ const Dash = () => {
       lights.forEach(light => {
         light.pollLightState();
       });
-    }, 1000);
+    }, 1000000);
 
     //Set Light Polling
     setInterval(() => {
       leds.forEach(led => {
         led.pollLightState();
       });
-    }, 1000);
+    }, 1000000);
 
     // Add OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);

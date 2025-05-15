@@ -1,7 +1,50 @@
 .card {
     width: 90%;
-    padding: 2vh;
+    padding: 1vh;
     border-radius: 15px;
     border: solid gray 2px;
     margin-bottom: 3vh;
+    pointer-events: all;
+    transition: padding .25s ease-in-out;
+    color: rgb(202, 202, 202);
+}
+
+.card:hover {
+    padding: 10vh 1vw;
+}
+
+.title {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.actions {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.approve {
+    cursor: pointer;
+    transition: color .25s ease-in-out;
+}
+
+.deny {
+    cursor: pointer;
+    transition: color .25s ease-in-out;
+}
+
+.approve:hover {
+    color: rgb(97, 255, 97);
+}
+
+.deny:hover {
+    color: rgb(252, 63, 63);
+}
+
+.requester {
+    color: rgb(234, 211, 76);
 }
