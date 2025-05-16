@@ -7,6 +7,7 @@ const dock = () => {
     <>
         <div className={styles.dockWrap}>
             <App name="True NAS" img="TrueNAS.webp" url="http://192.168.2.150/"></App>
+            <App name="Unifi" img="unifi.svg" url="https://192.168.2.254/"></App>
             <App name="Plex" img="plex.png" url="http://192.168.2.150:32400/web/index.html#!/"></App>
             <App name="Home Assistant" img="homeas.png" url="http://192.168.2.150:30103"></App>
             <App name="qBittrrent" img="qbit.png" url="http://192.168.2.150:30024"></App>
@@ -19,6 +20,7 @@ const dock = () => {
             <App name="ESP Home" img="esphome.svg" url="http://192.168.2.157:8123/5c53de3b_esphome/ingress"></App>
             <App name="Flood" img="flood.png" url="http://192.168.2.150:30127"></App>
             <App name="Scrypted" img="scrypted.png" url="http://192.168.2.150:30130"></App>
+            <App name="Youtube" img="youtube.avif" url="https://www.youtube.com"></App>
         </div>
     </>
   )

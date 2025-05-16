@@ -31,11 +31,12 @@
     font-style: normal;
     color: white;
     position: absolute;
-    font-size: .8rem;
+    font-size: .65rem;
     transform: translateY(-3vh) translateX(-50%);
     left: 50%;
     text-align: center;
     display: none;
+    width: 150%;
 }
 
 .appIcon {
