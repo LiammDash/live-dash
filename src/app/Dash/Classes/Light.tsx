@@ -28,7 +28,7 @@ export class Light {
     this.inactiveColor = 0x555555;
 
     this.light = new THREE.PointLight(this.color, this.intensity);
-    const geometry = new THREE.SphereGeometry(2, 2, 2);
+    const geometry = new THREE.SphereGeometry(2, 100, 100);
     const material = new THREE.MeshBasicMaterial({ color: this.inactiveColor });
     this.sphere = new THREE.Mesh(geometry, material);
     this.sphere.position.set(x, y, z);
