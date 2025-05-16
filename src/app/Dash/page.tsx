@@ -158,11 +158,11 @@ const Dash = () => {
     let bathroom2 = new Light(helpers, -55, 38, 8, "light.hue_color_downlight_1_4", "light.bathroom_2");
     lights.push(bathroom1, bathroom2)
 
-    let bedroomLamp1 = new Light(helpers, -40, 10, -20, "light.bedroom_l", "");
-    let bedroomLamp2 = new Light(helpers, -15, 10, -20, "light.bedroom_r", "");
+    let bedroomLamp1 = new Light(helpers, -43.2, 10.5, -20.5, "light.bedroom_l", "", 1);
+    let bedroomLamp2 = new Light(helpers, -10, 10.5, -20.5, "light.bedroom_r", "", 1);
     lights.push(bedroomLamp1, bedroomLamp2)
 
-    let kitchenLamp1 = new Light(helpers, 58, 12, -14, "light.wooden_light", "light.lounge");
+    let kitchenLamp1 = new Light(helpers, 58.2, 12.5, -14.3, "light.wooden_light", "light.lounge", 1);
     lights.push(kitchenLamp1)
 
 

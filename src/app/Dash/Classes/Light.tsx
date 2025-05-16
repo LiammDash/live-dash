@@ -13,9 +13,10 @@ export class Light {
   hoverColor: any;
   activeColor: any;
   inactiveColor: any;
+  scale: any;
 
 
-  constructor(helpers: any, x: number, y: number, z: number, HAid: string = "", groupId: string = "") {
+  constructor(helpers: any, x: number, y: number, z: number, HAid: string = "", groupId: string = "", scale = 2) {
     //Init Vars
     this.helpers = helpers;
     this.groupId = groupId;
@@ -26,9 +27,10 @@ export class Light {
     this.hoverColor = 0xBBFFBB;
     this.activeColor = 0xffffff;
     this.inactiveColor = 0x555555;
+    this.scale = scale;
 
     this.light = new THREE.PointLight(this.color, this.intensity);
-    const geometry = new THREE.SphereGeometry(2, 100, 100);
+    const geometry = new THREE.SphereGeometry(this.scale, 100, 100);
     const material = new THREE.MeshBasicMaterial({ color: this.inactiveColor });
     this.sphere = new THREE.Mesh(geometry, material);
     this.sphere.position.set(x, y, z);
