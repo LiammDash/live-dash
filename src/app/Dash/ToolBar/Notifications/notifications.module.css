@@ -28,7 +28,7 @@
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* IE and Edge */
-    background: linear-gradient(to left, #323232b0, #00000000);
+    background: linear-gradient(to left, #080808b0, #00000000);
     pointer-events: none;
 }
 

@@ -22,14 +22,14 @@ export class Light {
     this.HAid = HAid;
     this.active = false;
     this.color = this.activeColor
-    this.intensity = 1;
+    this.intensity = 0;
     this.hoverColor = 0xBBFFBB;
     this.activeColor = 0xffffff;
     this.inactiveColor = 0x555555;
 
     this.light = new THREE.PointLight(this.color, this.intensity);
     const geometry = new THREE.SphereGeometry(2, 2, 2);
-    const material = new THREE.MeshBasicMaterial({ color: this.activeColor });
+    const material = new THREE.MeshBasicMaterial({ color: this.inactiveColor });
     this.sphere = new THREE.Mesh(geometry, material);
     this.sphere.position.set(x, y, z);
     helpers.scene.add(this.sphere);
