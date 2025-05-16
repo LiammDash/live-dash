@@ -169,7 +169,7 @@ const Dash = () => {
     //Create LED Strips
     let leds: LED[] = [];
 
-    let serverLED = new LED(helpers, "light.rack_light_1", "", "Server_LED_Strip");
+    let serverLED = new LED(helpers, "light.rack_light_1", "", "Server_LED_Strip", 23, 6, -8);
     leds.push(serverLED)
 
     //Set Light Polling

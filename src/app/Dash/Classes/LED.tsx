@@ -15,9 +15,13 @@ export class LED {
     hoverColor: any;
     activeColor: any;
     inactiveColor: any;
+    x: any;
+    y: any;
+    z: any;
+    light: any;
 
 
-    constructor(helpers: any, HAid: string = "", groupId: string = "", modelName: string = "") {
+    constructor(helpers: any, HAid: string = "", groupId: string = "", modelName: string = "", x, y, z) {
         //Init Vars
         this.modelName = modelName;
         this.helpers = helpers;
@@ -32,6 +36,10 @@ export class LED {
         this.hoverColor = 0xBBFFBB;
         this.activeColor = 0xffffff;
         this.inactiveColor = 0x555555;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.light = THREE.PointLight;
 
     }
 
@@ -89,6 +97,11 @@ export class LED {
         });
         this.material = emissiveMaterial;
 
+        //Initiate Point Light
+        this.light = new THREE.PointLight(this.color, this.intensity*6, 50, 1);
+        this.light.position.set(this.x, this.y, this.z);
+        this.helpers.scene.add(this.light);
+
         this.pollLightState();
 
         this.init = true;
@@ -106,15 +119,19 @@ export class LED {
             if (data.state === 'on' && !this.isHovered) {
                 this.setActive(true)
                 this.material.color.setHex(parseInt(data.color, 16))
+                this.light.visible = true;
+                this.light.color.setHex(parseInt(data.color, 16))
                 this.material.emissive.setHex(parseInt(data.color, 16))
                 this.material.intensity = data.brightness*100000;
                 this.model.material = this.material;
             } else if (data.state != 'on' && !this.isHovered) {
                 this.setActive(false)
                 this.material.color.set(this.inactiveColor)
+                this.light.visible = false;
+                this.light.color.set(this.inactiveColor)
                 this.material.emissive.set(this.inactiveColor)
                 this.material.intensity = data.brightness*1;
-                this.model.material = this.material;   
+                this.model.material = this.material;
             }
         })
         .catch((error) => {
@@ -126,6 +143,7 @@ export class LED {
         this.active = active;
         if (this.model && !this.isHovered) {
             this.material.color.set(active ? this.activeColor : this.inactiveColor);
+            this.light.color.set(active ? this.activeColor : this.inactiveColor);
         }
     }
 }
