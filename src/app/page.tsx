@@ -4,6 +4,7 @@ import Dash from './Dash/page'
 const page = () => {
   return (
     <>
+      
       <Dash />
     </>
   )

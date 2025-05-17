@@ -20,6 +20,7 @@ import { Light } from './Classes/Light'
 import { LED } from './Classes/LED'
 import Dock from '@/app/Dash/Dock/dock'
 import ToolBar from '@/app/Dash/ToolBar/toolbar'
+import ColorPicker from '@/app/Dash/ColorPicker/colorpicker'
 
 const Dash = () => {
   //Vars
@@ -204,6 +205,7 @@ const Dash = () => {
   }, []);
   return (
     <>
+      <ColorPicker x={50} y={50} />
       <ToolBar />
       <Dock />
     </>

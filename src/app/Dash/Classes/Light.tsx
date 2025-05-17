@@ -68,6 +68,8 @@ export class Light {
           this.isHovered = true;
           (this.sphere.material as THREE.MeshBasicMaterial).color.set(this.hoverColor); // highlight color
           helpers.renderer.domElement.style.cursor = 'pointer';
+          //Show Color Picker
+          document.getElementById
         }
       } else {
         if (this.isHovered) {

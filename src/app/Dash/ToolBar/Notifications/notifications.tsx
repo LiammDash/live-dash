@@ -22,7 +22,6 @@ const notifications = () => {
             });
             if (res.ok) {
                 const data = await res.json();
-                console.log(data)
                 setRequests(Array.isArray(data) ? data : data.results || []);
             }
         } catch (error) {
