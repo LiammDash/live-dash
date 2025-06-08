@@ -205,7 +205,6 @@ const Dash = () => {
   }, []);
   return (
     <>
-      <ColorPicker x={50} y={50} />
       <ToolBar />
       <Dock />
     </>

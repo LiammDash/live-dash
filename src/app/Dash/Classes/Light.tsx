@@ -14,6 +14,7 @@ export class Light {
   activeColor: any;
   inactiveColor: any;
   scale: any;
+  selectedRgb: any;
 
 
   constructor(helpers: any, x: number, y: number, z: number, HAid: string = "", groupId: string = "", scale = 2) {
@@ -28,6 +29,7 @@ export class Light {
     this.activeColor = 0xffffff;
     this.inactiveColor = 0x555555;
     this.scale = scale;
+    this.selectedRgb = '';
 
     this.light = new THREE.PointLight(this.color, this.intensity);
     const geometry = new THREE.SphereGeometry(this.scale, 100, 100);
@@ -58,18 +60,48 @@ export class Light {
         })
       }
     });
-
+    //Add event listener
+    // Add event listener for send-color
+    document.addEventListener('send-color', (event: Event) => {
+      const customEvent = event as CustomEvent<{ color: string }>;
+      if (helpers.pickHelper.pickedObject === this.sphere) {
+      const color = customEvent.detail.color;
+      this.selectedRgb = color;
+      (this.sphere.material as THREE.MeshBasicMaterial).color.set(color);
+      fetch(`/api/setLightColor/${this.HAid}`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ color }),
+      })
+      .then((response) => {
+        if (response.ok) {
+        this.pollLightState();
+        } else {
+        console.error('Error setting light color');
+        }
+      });
+      }
+    });
     // Add hover effect
     helpers.renderer.domElement.addEventListener('mousemove', (event: MouseEvent | Touch) => {
       helpers.pickHelper.setPickPosition(event, helpers.getCanvasRelativePosition(event));
       helpers.pickHelper.pick(helpers.scene, helpers.camera, performance.now());
       if (helpers.pickHelper.pickedObject === this.sphere) {
         if (!this.isHovered) {
-          this.isHovered = true;
-          (this.sphere.material as THREE.MeshBasicMaterial).color.set(this.hoverColor); // highlight color
-          helpers.renderer.domElement.style.cursor = 'pointer';
-          //Show Color Picker
-          document.getElementById
+            this.isHovered = true;
+            (this.sphere.material as THREE.MeshBasicMaterial).color.set(this.hoverColor); // highlight color
+            helpers.renderer.domElement.style.cursor = 'pointer';
+            //Show Color Picker
+            const colorInput = document.getElementById('selected-color') as HTMLInputElement | null;
+            if (colorInput) {
+              (document.getElementById('selected-color-wrap') as HTMLElement)?.style.setProperty('display', 'block');
+              colorInput.style.left = `${event.clientX - 20}px`;
+              colorInput.style.top = `${event.clientY - 100}px`;
+              colorInput.style.position = 'absolute';
+              colorInput.style.display = 'block';
+            }
         }
       } else {
         if (this.isHovered) {

@@ -21,7 +21,7 @@ export class LED {
     light: any;
 
 
-    constructor(helpers: any, HAid: string = "", groupId: string = "", modelName: string = "", x, y, z) {
+    constructor(helpers: any, HAid: string = "", groupId: string = "", modelName: string = "", x: any, y: any, z: any) {
         //Init Vars
         this.modelName = modelName;
         this.helpers = helpers;
